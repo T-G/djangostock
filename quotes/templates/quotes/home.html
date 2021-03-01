@@ -1,0 +1,37 @@
+{% extends 'quotes/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% if api %}
+
+    {% if api == "Error" %}
+        <div class="bg-danger text-white text-center p-4"><p>There was a problem with your ticker symbol, please try again..</p></div>
+    {% else %}
+
+        <div class="card text-center">
+            <div class=" display-6 card-header">
+                {{api.companyName}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Price: ${{api.latestPrice}}</h5>
+                <p class="card-text">Previous Close: ${{api.previousClose}}</p>
+                <p class="card-text">Market Cap: {{api.marketCap}}</p>
+                <p class="card-text">YTD Change: {{api.ytdChange}}</p>
+                <p class="card-text">52 Wk High: ${{api.week52High}}</p>
+                <p class="card-text">52 Wk Low: ${{api.week52Low}}</p>
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+    <!-- <p>There was a problem with your ticker symbol, please try again..</p> -->
+    <div class="bg-light p-4">
+        <p class="text-center">{{ ticker }}</p>
+    </div>
+
+{% endif%}
+
+
+{% endblock %}
