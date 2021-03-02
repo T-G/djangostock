@@ -1,7 +1,10 @@
 from django.shortcuts import render
 
+from decouple import config
+
+
 def home(request):
-    token = 'pk_d292e121839c4a78b372fbf259af6167'
+    token = env('TOKEN')
     # url https://sandbox.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10&token=Tsk_5ae4803c3eba4867ae86df6e747952d0
     import requests
     import json
@@ -21,11 +24,10 @@ def home(request):
         ticker = "Please Enter a Ticker Symbol Above..."
         return render(request, 'quotes/home.html', {'ticker': ticker})
     
-
-
 def about(request):
     return render(request, 'quotes/about.html', {})
 
-def get_stock_history(request):
 
-    return render(request, 'get_stock_history.html', {})
+def add_stock(request):
+
+    return render(request, 'quotes/add_stock.html', {})
