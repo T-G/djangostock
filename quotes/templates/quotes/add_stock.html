@@ -6,4 +6,25 @@
 
 <h2>Add Stock</h2>
 
+<form class="d-flex" method="POST" action="{% url 'add_stock' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Add to Portfolio" name="ticker">
+    <button class="btn btn-outline-success" type="submit">Add Stock</button>
+</form>
+
+<br>
+
+{% for item in ticker %}
+    <div class="row">
+        <div class="col-4">              
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{item}} <a href="{% url 'delete_stock' item.id %}">Delete stock</a></h5>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+{% endfor %}
 {% endblock %}

@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from decouple import config
-
+from .models import Stock
+from django.contrib import messages
+from .forms import StockForm
 
 def home(request):
-    token = env('TOKEN')
+    token = config('API_TOKEN')
     # url https://sandbox.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10&token=Tsk_5ae4803c3eba4867ae86df6e747952d0
     import requests
     import json
@@ -29,5 +31,19 @@ def about(request):
 
 
 def add_stock(request):
+    if request.method == 'POST':
+        form = StockForm(request.POST or None)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Stock has been added..."))
+            return redirect('add_stock')
+    
+    ticker = Stock.objects.all()
+    return render(request, 'quotes/add_stock.html', {'ticker' : ticker})
 
-    return render(request, 'quotes/add_stock.html', {})
+def delete_stock(request, stock_id):
+    item = Stock.objects.get(pk=stock_id)
+    item.delete()
+    messages.success(request, ("Stock has been removed!"))
+    return redirect('add_stock')
