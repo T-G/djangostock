@@ -13,18 +13,37 @@
 </form>
 
 <br>
+<table class="table table-light table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Stock Price</th>
+            <th scope="col">Previous Close Name</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">YTD Change</th>
+            <th scope="col">52w High</th>
+            <th scope="col">52w Low</th>
+            <th scope="row">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if ticker %}
+            {% for list_item in result %}
+                <tr>
+                    <th scope="row">{{ forloop.counter}}</th>
+                    <td>{{ list_item.companyName }}</td>
+                    <td>{{ list_item.latestPrice|floatformat:2 }}</td>
+                    <td>${{ list_item.previousClose|floatformat:2 }}</td>
+                    <td>${{ list_item.marketCap|floatformat:2 }}</td>
+                    <td>${{ list_item.ytdChange |floatformat:3}}</td>
+                    <td>${{ list_item.week52High|floatformat:2 }}</td>
+                    <td>${{ list_item.week52Low|floatformat:2 }}</td>
+                    <td>Delete Stock</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
 
-{% for item in ticker %}
-    <div class="row">
-        <div class="col-4">              
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">{{item}} <a href="{% url 'delete_stock' item.id %}">Delete stock</a></h5>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-
-{% endfor %}
 {% endblock %}

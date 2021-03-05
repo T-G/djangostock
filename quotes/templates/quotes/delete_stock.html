@@ -1,0 +1,21 @@
+{% extends 'quotes/base.html' %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+
+<h2>Delete Stock</h2>
+
+{% if ticker %}
+<ul>
+    {% for item in ticker %}
+    
+    <li>{{ item }} - <a href="{% url 'delete' item.id %}">delete stock</a></li>
+    {% endfor %}
+
+</ul>
+
+
+{% endif %}
+
+{% endblock %}
